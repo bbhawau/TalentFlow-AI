@@ -20,7 +20,10 @@ app.config["SESSION_COOKIE_SECURE"] = (
 
 AWS_REGION = os.getenv("AWS_REGION", "eu-west-1")
 DB_SECRET_ARN = os.getenv("DB_SECRET_ARN")
-APP_SECRET_ARN = os.getenv("APP_SECRET_ARN")
+APP_SECRET_ARN = (
+    os.getenv("APP_SECRET_ARN")
+    or os.getenv("APP_CONFIG_SECRET_ARN")
+)
 
 secrets_client = boto3.client(
     "secretsmanager",
