@@ -18,7 +18,7 @@ app.config["SESSION_COOKIE_SECURE"] = (
     os.getenv("SESSION_COOKIE_SECURE", "false").lower() == "true"
 )
 
-AWS_REGION = os.getenv("AWS_REGION", "eu-west-1")
+AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
 DB_SECRET_ARN = os.getenv("DB_SECRET_ARN")
 APP_SECRET_ARN = (
     os.getenv("APP_SECRET_ARN")
