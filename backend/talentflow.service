@@ -1,0 +1,15 @@
+[Unit]
+Description=TalentFlow AI Flask Backend
+After=network.target
+
+[Service]
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/opt/talentflow/backend
+EnvironmentFile=/etc/talentflow/talentflow.env
+ExecStart=/opt/talentflow/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:8000 app:app
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,5 @@
+Flask
+gunicorn
+psycopg2-binary
+boto3
+Werkzeug
