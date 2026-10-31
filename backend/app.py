@@ -12,7 +12,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
-app.config["SECRET_KEY"] = get_app_config()["app_secret"]
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_SECURE"] = (
@@ -41,6 +40,7 @@ def get_app_config():
         raise RuntimeError("APP_SECRET_ARN is not configured")
 
     return get_secret(APP_SECRET_ARN)
+app.config["SECRET_KEY"] = get_app_config()["app_secret"]
 
 def get_db_connection():
     if not DB_SECRET_ARN:
