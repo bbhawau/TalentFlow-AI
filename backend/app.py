@@ -49,21 +49,24 @@ def get_db_connection():
     if not DB_SECRET_ARN:
         raise RuntimeError("DB_SECRET_ARN is not configured")
 
+    host = os.getenv("DB_HOST")
+    port = int(os.getenv("DB_PORT", "5432"))
+    database = os.getenv("DB_NAME", "talentflow")
+
+    if not host:
+        raise RuntimeError("DB_HOST is not configured")
+
     credentials = get_secret(DB_SECRET_ARN)
 
     return psycopg2.connect(
-        host=credentials["host"],
-        database=os.getenv(
-            "DB_NAME",
-            credentials.get("dbname", "talentflow")
-        ),
+        host=host,
+        database=database,
         user=credentials["username"],
         password=credentials["password"],
-        port=credentials.get("port", 5432),
+        port=port,
         connect_timeout=5,
         sslmode="require"
     )
-
 
 def query_db(query, values=None, fetch=False):
     connection = get_db_connection()
