@@ -72,19 +72,19 @@ def query_db(query, values=None, fetch=False):
         with connection.cursor(
             cursor_factory=RealDictCursor
         ) as cursor:
-
             cursor.execute(query, values or ())
 
             if fetch:
                 result = cursor.fetchall()
-                return [dict(row) for row in result]
-
-            if cursor.description:
+                result = [dict(row) for row in result]
+            elif cursor.description:
                 result = cursor.fetchone()
-                return dict(result) if result else None
+                result = dict(result) if result else None
+            else:
+                result = None
 
             connection.commit()
-            return None
+            return result
 
     except Exception:
         connection.rollback()
