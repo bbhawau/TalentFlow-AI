@@ -571,32 +571,34 @@ function addJob() {
         "RECRUITMENT",
         "Create Job",
         `<form class="modal-form" id="jobForm">
-      <div>
-        <label>Job Title</label>
-        <input id="jobTitle" required>
-      </div>
-      <div>
-        <label>Department</label>
-        <input id="jobDept" required>
-      </div>
-      <div>
-        <label>Location</label>
-        <input id="jobLocation" required>
-      </div>
-      <div>
-        <label>Type</label>
-        <select id="jobType">
-          <option>Full-time</option>
-          <option>Part-time</option>
-          <option>Contract</option>
-        </select>
-      </div>
-      <div>
-        <label>Job Description</label>
-        <textarea id="jobDescription" placeholder="Describe the role"></textarea>
-      </div>
-      <button class="primary-button" type="submit">Create Job</button>
-    </form>`,
+            <div>
+                <label>Job Title</label>
+                <input id="jobTitle" required>
+            </div>
+            <div>
+                <label>Department</label>
+                <input id="jobDept" required>
+            </div>
+            <div>
+                <label>Location</label>
+                <input id="jobLocation" required>
+            </div>
+            <div>
+                <label>Type</label>
+                <select id="jobType">
+                    <option>Full-time</option>
+                    <option>Part-time</option>
+                    <option>Contract</option>
+                </select>
+            </div>
+            <div>
+                <label>Job Description</label>
+                <textarea id="jobDescription"></textarea>
+            </div>
+            <button class="primary-button" type="submit">
+                Create Job
+            </button>
+        </form>`
     );
 
     $("jobForm").onsubmit = async (e) => {
@@ -607,13 +609,13 @@ function addJob() {
             department: $("jobDept").value.trim(),
             location: $("jobLocation").value.trim(),
             employment_type: $("jobType").value,
-            description: $("jobDescription").value.trim(),
+            description: $("jobDescription").value.trim()
         };
 
         try {
-            await apiRequest("/api/jobs", {
+            const result = await apiRequest("/api/jobs", {
                 method: "POST",
-                body: JSON.stringify(job),
+                body: JSON.stringify(job)
             });
 
             await loadJobsFromAPI();
@@ -621,8 +623,8 @@ function addJob() {
             closeModal();
             showToast("Job opening created successfully");
         } catch (error) {
-            showToast(error.message);
             console.error("Job creation failed:", error);
+            showToast(error.message);
         }
     };
 }
